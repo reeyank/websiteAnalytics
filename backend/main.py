@@ -13,7 +13,11 @@ from .schemas import AnalyticsPayloadSchema
 from .routers import auth_router, oauth_router, websites_router
 from .dependencies import get_current_user
 
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as e:
+    print(f"Warning: Could not initialize database tables: {e}")
+    print("Application will continue without database initialization")
 
 app = FastAPI(title="Website Analytics API")
 
@@ -29,6 +33,12 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(oauth_router)
 app.include_router(websites_router)
+
+
+@app.get("/health")
+def health_check():
+    """Health check endpoint for Railway"""
+    return {"status": "healthy", "service": "website-analytics-api"}
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
