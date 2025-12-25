@@ -59,9 +59,9 @@ export default function TestPage() {
   return (
     <>
       <Script
-        src="https://api.publickeyboard.com/script.js"
+        src="http://api.publickeyboard.com/script.js"
         data-site-id="a4aa5a02-8c49-4e14-a016-42103a643624"
-        data-endpoint="https://api.publickeyboard.com/api/analytics"
+        data-endpoint="http://api.publickeyboard.com/api/analytics"
         strategy="afterInteractive"
         onLoad={() => {
           setTrackingStatus("active");

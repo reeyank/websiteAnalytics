@@ -1,4 +1,4 @@
-const API_BASE = "https://api.publickeyboard.com";
+const API_BASE = "http://api.publickeyboard.com";
 
 export interface User {
   user_id: string;
