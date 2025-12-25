@@ -7,11 +7,11 @@ from collections import defaultdict
 import json
 import os
 
-from .database import engine, get_db, Base
-from .models import AnalyticsEvent, SessionMeta, MouseHeatmap
-from .schemas import AnalyticsPayloadSchema
-from .routers import auth_router, oauth_router, websites_router
-from .dependencies import get_current_user
+from database import engine, get_db, Base
+from models import AnalyticsEvent, SessionMeta, MouseHeatmap
+from schemas import AnalyticsPayloadSchema
+from routers import auth_router, oauth_router, websites_router
+from dependencies import get_current_user
 
 try:
     Base.metadata.create_all(bind=engine)

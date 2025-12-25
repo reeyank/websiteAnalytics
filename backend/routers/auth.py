@@ -4,9 +4,9 @@ from sqlalchemy import text, insert
 from datetime import datetime, timedelta
 import uuid
 
-from ..database import get_db
-from ..models import User, AuthSession
-from ..security import (
+from database import get_db
+from models import User, AuthSession
+from security import (
     hash_password,
     verify_password,
     create_access_token,
@@ -14,8 +14,8 @@ from ..security import (
     decode_token,
     hash_token
 )
-from ..dependencies import get_current_user
-from ..config import settings
+from dependencies import get_current_user
+from config import settings
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 

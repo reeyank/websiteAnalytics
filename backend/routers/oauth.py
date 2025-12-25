@@ -6,10 +6,10 @@ import httpx
 import uuid
 from datetime import datetime, timedelta
 
-from ..database import get_db
-from ..models import User, OAuthAccount, AuthSession
-from ..security import create_access_token, create_refresh_token, hash_token
-from ..config import settings
+from database import get_db
+from models import User, OAuthAccount, AuthSession
+from security import create_access_token, create_refresh_token, hash_token
+from config import settings
 
 router = APIRouter(prefix="/auth/oauth", tags=["oauth"])
 

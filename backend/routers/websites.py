@@ -4,10 +4,10 @@ from sqlalchemy import text, insert
 from datetime import datetime
 import uuid
 
-from ..database import get_db
-from ..models import Website, ApiKey
-from ..security import generate_api_key
-from ..dependencies import get_current_user, verify_site_ownership
+from database import get_db
+from models import Website, ApiKey
+from security import generate_api_key
+from dependencies import get_current_user, verify_site_ownership
 from pydantic import BaseModel
 from typing import Optional, List
 
