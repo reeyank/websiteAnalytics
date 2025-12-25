@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        #stats {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Website Analytics Test Page</h1>
+
+    <div class="status">
+        ✅ Analytics tracking is active! Check your browser console for tracking events.
+    </div>
+
+    <div class="card">
+        <h2>Test Interactions</h2>
+        <p>Click these buttons to generate tracking events:</p>
+
+        <button id="btn1" onclick="handleClick('Button 1')">Click Me - Button 1</button>
+        <button id="btn2" onclick="handleClick('Button 2')">Click Me - Button 2</button>
+        <button id="btn3" onclick="handleClick('Button 3')">Click Me - Button 3</button>
+
+        <button onclick="testCustomEvent()">Send Custom Event</button>
+        <button onclick="testIdentify()">Identify User</button>
+    </div>
+
+    <div class="card">
+        <h2>Track Goals</h2>
+        <p>These elements have goal tracking:</p>
+        <button data-fast-goal="signup_clicked" data-fast-goal-plan="pro">Sign Up for Pro</button>
+        <button data-fast-goal="demo_requested" data-fast-goal-source="homepage">Request Demo</button>
+    </div>
+
+    <div class="card">
+        <h2>Scroll Tracking</h2>
+        <div data-fast-scroll="reached_bottom" data-fast-scroll-threshold="0.8" style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+            <p>Scroll down in this box to trigger a scroll event...</p>
+            <div style="height: 500px;">
+                <p>Keep scrolling...</p>
+                <p>Almost there...</p>
+                <p>You reached the bottom!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>External Links</h2>
+        <p>These links will be tracked as external:</p>
+        <a href="https://github.com">GitHub</a> |
+        <a href="https://google.com">Google</a> |
+        <a href="https://example.com">Example</a>
+    </div>
+
+    <div class="card">
+        <h2>Server Statistics</h2>
+        <button onclick="fetchStats()">Fetch Stats from Server</button>
+        <div id="stats"></div>
+    </div>
+
+    <script
+        src="script.js"
+        data-website-id="test-website-001"
+        data-domain="localhost"
+        data-allow-localhost="true"
+        data-debug="true">
+    </script>
+
+    <script>
+        function handleClick(buttonName) {
+            console.log(`${buttonName} clicked!`);
+            if (window.analytics) {
+                window.analytics('button_click', { button_name: buttonName });
+            }
+        }
+
+        function testCustomEvent() {
+            if (window.analytics) {
+                window.analytics.track('test_event', {
+                    category: 'testing',
+                    action: 'custom_event_fired',
+                    value: '123'
+                });
+                alert('Custom event sent!');
+            }
+        }
+
+        function testIdentify() {
+            if (window.analytics) {
+                window.analytics.identify('user_' + Date.now(), {
+                    name: 'Test User',
+                    email: 'test@example.com',
+                    plan: 'pro'
+                });
+                alert('User identified!');
+            }
+        }
+
+        async function fetchStats() {
+            try {
+                const response = await fetch('http://localhost:8000/stats');
+                const data = await response.json();
+                document.getElementById('stats').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('stats').textContent = 'Error: ' + error.message + '\n\nMake sure the server is running!';
+            }
+        }
+    </script>
+</body>
+</html>

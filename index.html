@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cool Buttons Demo</title>
+    <style>
+      :root {
+        --bg: #050816;
+        --card: #0f172a;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.2);
+        --accent-2: #a855f7;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --radius: 999px;
+        --transition-fast: 150ms ease-out;
+        --transition: 220ms ease-out;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #1e293b 0, #020617 50%, #000 100%);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .page {
+        width: 100%;
+        max-width: 960px;
+        background: radial-gradient(circle at top left, #1f2937 0, #020617 55%);
+        border-radius: 24px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        box-shadow:
+          0 24px 80px rgba(15, 23, 42, 0.9),
+          0 0 0 1px rgba(148, 163, 184, 0.2);
+        padding: 24px 24px 28px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .glow {
+        position: absolute;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent);
+        top: -120px;
+        right: -140px;
+        filter: blur(6px);
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .grain {
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+        mix-blend-mode: soft-light;
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      .content {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+        gap: 32px;
+        align-items: center;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 10px 4px 4px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.45);
+        backdrop-filter: blur(8px);
+        margin-bottom: 14px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .badge-pip {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 20%, #f9fafb, #38bdf8);
+        box-shadow:
+          0 0 0 1px rgba(56, 189, 248, 0.4),
+          0 0 20px rgba(56, 189, 248, 0.7);
+        position: relative;
+      }
+
+      .badge-pip::after {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        border-radius: inherit;
+        border: 1px solid rgba(15, 23, 42, 0.7);
+      }
+
+      h1 {
+        font-size: clamp(30px, 3.6vw, 40px);
+        line-height: 1.1;
+        margin-bottom: 10px;
+        letter-spacing: -0.03em;
+      }
+
+      h1 span.accent {
+        background: linear-gradient(120deg, #38bdf8, #22c55e, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .subtitle {
+        font-size: 14px;
+        color: var(--muted);
+        max-width: 420px;
+        line-height: 1.6;
+        margin-bottom: 18px;
+      }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      button {
+        font-family: inherit;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .btn-primary {
+        position: relative;
+        overflow: hidden;
+        padding: 9px 18px;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, #38bdf8, #2563eb);
+        color: white;
+        font-weight: 550;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow:
+          0 12px 25px rgba(37, 99, 235, 0.55),
+          0 0 0 1px rgba(191, 219, 254, 0.5);
+        transition:
+          transform var(--transition),
+          box-shadow var(--transition),
+          filter var(--transition-fast);
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 0 0,
+          rgba(248, 250, 252, 0.9),
+          transparent 55%
+        );
+        opacity: 0;
+        transition: opacity var(--transition-fast);
+      }
+
+      .btn-primary span.sparkle {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.8);
+        background: radial-gradient(circle at 30% 20%, #bae6fd, #0ea5e9);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px) scale(1.01);
+        box-shadow:
+          0 16px 35px rgba(37, 99, 235, 0.7),
+          0 0 0 1px rgba(219, 234, 254, 0.7);
+        filter: brightness(1.02);
+      }
+
+      .btn-primary:hover::before {
+        opacity: 1;
+      }
+
+      .btn-primary:active {
+        transform: translateY(0) scale(0.99);
+        box-shadow:
+          0 8px 18px rgba(37, 99, 235, 0.7),
+          0 0 0 1px rgba(191, 219, 254, 0.7);
+      }
+
+      .btn-outline {
+        padding: 8px 16px;
+        border-radius: var(--radius);
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.8);
+        color: var(--muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition:
+          background-color var(--transition-fast),
+          border-color var(--transition-fast),
+          transform var(--transition-fast),
+          color var(--transition-fast);
+      }
+
+      .btn-outline:hover {
+        background: rgba(15, 23, 42, 0.95);
+        border-color: rgba(248, 250, 252, 0.75);
+        color: var(--text);
+        transform: translateY(-1px);
+      }
+
+      .btn-outline-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.35);
+      }
+
+      .note {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .note strong {
+        color: #e5e7eb;
+        font-weight: 500;
+      }
+
+      /* Right column: "cool buttons" gallery */
+      .panel {
+        background: radial-gradient(circle at top, #0b1120, #020617);
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        padding: 16px 16px 14px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background:
+          radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.35), transparent 55%),
+          radial-gradient(circle at 100% 0, rgba(168, 85, 247, 0.4), transparent 55%);
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      .panel-inner {
+        position: relative;
+        z-index: 1;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .panel-title {
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .panel-pills {
+        display: flex;
+        gap: 6px;
+      }
+
+      .pill {
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        color: var(--muted);
+        background: rgba(15, 23, 42, 0.9);
+      }
+
+      .buttons-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .card {
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.75);
+        border-radius: 14px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+      }
+
+      .card-label {
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .tiny-text {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .card-footer {
+        font-size: 10px;
+        color: rgba(148, 163, 184, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .dot-row {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+      }
+
+      .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.7);
+      }
+
+      .dot.accent {
+        background: #38bdf8;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+      }
+
+      /* Special buttons */
+      .btn-ghost {
+        padding: 8px 14px;
+        border-radius: var(--radius);
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px dashed rgba(148, 163, 184, 0.85);
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        transition:
+          transform var(--transition-fast),
+          background-color var(--transition-fast),
+          border-color var(--transition-fast);
+      }
+
+      .btn-ghost span.label {
+        font-size: 13px;
+      }
+
+      .btn-ghost span.badge {
+        margin: 0;
+        padding: 2px 8px;
+        font-size: 10px;
+      }
+
+      .btn-ghost:hover {
+        background: rgba(15, 23, 42, 0.98);
+        border-color: rgba(248, 250, 252, 0.85);
+        transform: translateY(-1px);
+      }
+
+      .btn-pill {
+        padding: 7px 14px;
+        border-radius: var(--radius);
+        background: rgba(37, 99, 235, 0.15);
+        border: 1px solid rgba(96, 165, 250, 0.8);
+        color: #bfdbfe;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition:
+          background-color var(--transition-fast),
+          transform var(--transition-fast),
+          box-shadow var(--transition-fast);
+      }
+
+      .btn-pill-icon {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.85);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+      }
+
+      .btn-pill:hover {
+        background: rgba(37, 99, 235, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 0 0 1px rgba(191, 219, 254, 0.8);
+      }
+
+      .btn-soft {
+        padding: 7px 12px;
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.8);
+        color: var(--muted);
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        transition:
+          background-color var(--transition-fast),
+          transform var(--transition-fast),
+          border-color var(--transition-fast);
+      }
+
+      .btn-soft span.bubble {
+        padding: 2px 6px;
+        border-radius: 999px;
+        font-size: 10px;
+        background: rgba(30, 64, 175, 0.5);
+        color: #bfdbfe;
+      }
+
+      .btn-soft:hover {
+        background: rgba(15, 23, 42, 1);
+        border-color: rgba(248, 250, 252, 0.8);
+        transform: translateY(-1px);
+      }
+
+      .btn-soft:active,
+      .btn-pill:active,
+      .btn-ghost:active {
+        transform: translateY(0);
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .pill-mini {
+        padding: 2px 7px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.8);
+        background: rgba(15, 23, 42, 0.9);
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 24px;
+        transform: translateX(-50%) translateY(120%);
+        background: rgba(15, 23, 42, 0.98);
+        border-radius: 999px;
+        padding: 8px 16px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--muted);
+        backdrop-filter: blur(14px);
+        box-shadow:
+          0 14px 40px rgba(15, 23, 42, 0.9),
+          0 0 0 1px rgba(15, 23, 42, 0.9);
+        opacity: 0;
+        transition:
+          transform 260ms ease-out,
+          opacity 240ms ease-out;
+        z-index: 30;
+      }
+
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+
+      .toast-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.4);
+      }
+
+      .toast span.label {
+        color: #e5e7eb;
+      }
+
+      .toast span.secondary {
+        color: var(--muted);
+      }
+
+      /* Small responsive tweaks */
+      @media (max-width: 780px) {
+        .page {
+          padding: 20px 18px 22px;
+        }
+
+        .content {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .panel {
+          order: -1;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 14px;
+        }
+
+        .page {
+          border-radius: 18px;
+        }
+
+        .button-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .btn-primary,
+        .btn-outline {
+          justify-content: center;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="glow"></div>
+      <div class="grain"></div>
+
+      <div class="content">
+        <section>
+          <div class="badge">
+            <span class="badge-pip"></span>
+            Live preview of some <strong>cool button</strong> styles
+          </div>
+
+          <h1>
+            Minimal page,
+            <span class="accent">maximum button vibes.</span>
+          </h1>
+
+          <p class="subtitle">
+            A plain HTML page that still feels a little fancy. Play with the buttons
+            on the right to see subtle hover, depth, and micro-interaction states.
+          </p>
+
+          <div class="button-row">
+            <button class="btn-primary" id="primaryDemo">
+              <span class="sparkle">✦</span>
+              <span>Show me something</span>
+            </button>
+
+            <button class="btn-outline" id="outlineDemo">
+              <span class="btn-outline-dot"></span>
+              <span>Toggle button glow</span>
+            </button>
+          </div>
+
+          <p class="note">
+            <strong>Tip</strong>: click the primary button a couple of times — a
+            little toast pops in at the bottom to confirm the action.
+          </p>
+        </section>
+
+        <aside class="panel">
+          <div class="panel-inner">
+            <header class="panel-header">
+              <h2 class="panel-title">Button gallery</h2>
+              <div class="panel-pills">
+                <span class="pill">hover</span>
+                <span class="pill">active</span>
+              </div>
+            </header>
+
+            <div class="buttons-grid">
+              <div class="card">
+                <span class="card-label">Ghost action</span>
+                <button class="btn-ghost">
+                  <span class="label">Generate quick report</span>
+                  <span class="badge">
+                    <span class="badge-pip"></span>
+                    1s burst
+                  </span>
+                </button>
+                <div class="card-footer">
+                  <span>Subtle outline, full-width.</span>
+                  <div class="dot-row">
+                    <span class="dot"></span>
+                    <span class="dot accent"></span>
+                    <span class="dot"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <span class="card-label">Pill CTA</span>
+                <button class="btn-pill">
+                  <span class="btn-pill-icon">↗</span>
+                  <span>View analytics dashboard</span>
+                </button>
+                <p class="tiny-text">
+                  Feels clickable, but not shouty. Great for secondary CTAs.
+                </p>
+              </div>
+
+              <div class="card">
+                <span class="card-label">Soft row</span>
+                <button class="btn-soft">
+                  <span>Enable smooth mode</span>
+                  <span class="bubble">Recommended</span>
+                </button>
+                <p class="tiny-text">
+                  Slight depth, very gentle contrast. Perfect for “nice-to-have” actions.
+                </p>
+              </div>
+
+              <div class="card">
+                <span class="card-label">Mini pills</span>
+                <div class="pill-row">
+                  <span class="pill-mini">Hover states</span>
+                  <span class="pill-mini">Micro UX</span>
+                  <span class="pill-mini">No JS libs</span>
+                </div>
+                <p class="tiny-text">
+                  Lightweight tokens that still feel tactile and clickable.
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <span class="toast-dot"></span>
+      <span class="label">Demo toast</span>
+      <span class="secondary">Action triggered successfully.</span>
+    </div>
+
+    <!-- Website Analytics Script -->
+    <script
+        type="module"
+        src="script.js"
+        data-website-id="cool-test-website"
+        data-domain="localhost"
+        data-allow-localhost="true"
+        data-debug="true">
+    </script>
+
+    <script>
+      const primaryDemo = document.getElementById("primaryDemo");
+      const outlineDemo = document.getElementById("outlineDemo");
+      const toast = document.getElementById("toast");
+
+      let glowEnabled = true;
+      let toastTimeout;
+
+      primaryDemo.addEventListener("click", () => {
+        toast.classList.add("show");
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 1900);
+      });
+
+      outlineDemo.addEventListener("click", () => {
+        glowEnabled = !glowEnabled;
+        document.body.style.transition = "filter 220ms ease-out";
+        document.body.style.filter = glowEnabled ? "none" : "grayscale(0.18)";
+
+        outlineDemo.textContent = glowEnabled
+          ? "Toggle button glow"
+          : "Bring glow back";
+      });
+    </script>
+  </body>
+</html>

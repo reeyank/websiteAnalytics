@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Analytics Test</title>
+</head>
+<body>
+    <h1>Simple Analytics Test</h1>
+    <button id="testBtn">Click Me to Test Analytics</button>
+    <div id="output"></div>
+
+    <script>
+        // Manual test - send event directly to backend
+        const output = document.getElementById('output');
+
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            output.innerHTML = 'Sending test event...';
+
+            try {
+                const response = await fetch('http://localhost:8000/collect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'pageview',
+                        websiteId: 'simple-test',
+                        domain: 'localhost',
+                        href: window.location.href,
+                        referrer: document.referrer || null,
+                        viewport: {
+                            width: window.innerWidth,
+                            height: window.innerHeight
+                        },
+                        visitorId: 'test-visitor-' + Date.now(),
+                        sessionId: 'test-session-' + Date.now()
+                    })
+                });
+
+                const data = await response.json();
+                output.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                output.style.color = 'green';
+            } catch (error) {
+                output.innerHTML = 'Error: ' + error.message;
+                output.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

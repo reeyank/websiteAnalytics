@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Replay Player</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rrweb-player@latest/dist/style.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/rrweb-player@latest/dist/index.js"></script>
+
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
+        #controls { margin-bottom: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        #player-container { display: flex; justify-content: center; }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <div id="controls">
+        <h3>Replay Session</h3>
+        <p>Paste your JSON array of events below and click "Load Replay":</p>
+        <textarea id="eventData" placeholder='[{"type":0,"data":{...}}, ...]'></textarea>
+        <button onclick="loadReplay()">Load Replay</button>
+    </div>
+
+    <div id="player-container">
+        <div id="replay"></div>
+    </div>
+
+    <script>
+        let player;
+
+        function loadReplay() {
+            const rawData = document.getElementById('eventData').value;
+            
+            try {
+                const events = JSON.parse(rawData);
+
+                // Clear previous player instance if it exists
+                const container = document.getElementById('replay');
+                container.innerHTML = '';
+
+                // Initialize the player
+                player = new rrwebPlayer({
+                    target: container,
+                    props: {
+                        events,
+                        width: 1024,
+                        height: 576,
+                        autoPlay: true,
+                    },
+                });
+            } catch (e) {
+                alert("Invalid JSON data. Please check your format.");
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>
