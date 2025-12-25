@@ -95,7 +95,7 @@ export default function LoginPage() {
 
             <div className="mt-6 grid grid-cols-2 gap-3">
               <a
-                href="http://localhost:8000/auth/oauth/google"
+                href="http://api.publickeyboard.com/auth/oauth/google"
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--border)] hover:bg-[var(--background)] transition-colors text-white"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -119,7 +119,7 @@ export default function LoginPage() {
                 Google
               </a>
               <a
-                href="http://localhost:8000/auth/oauth/github"
+                href="http://api.publickeyboard.com/auth/oauth/github"
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-[var(--border)] hover:bg-[var(--background)] transition-colors text-white"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

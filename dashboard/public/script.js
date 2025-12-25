@@ -7,7 +7,7 @@
     cookieExpiry: 30, // days
     batchSize: 10,
     flushInterval: 5000, // ms
-    endpoint: 'http://localhost:8000/api/analytics', // FastAPI backend
+    endpoint: 'http://api.publickeyboard.com/api/analytics', // FastAPI backend
     trackMouseMovement: true,
     mouseSampleRate: 100, // ms between mouse position samples
     debug: false

@@ -4,7 +4,7 @@ import bcrypt
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
-from config import settings
+from .config import settings
 
 
 def hash_password(password: str) -> str:

@@ -3,8 +3,8 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from typing import Optional
-from database import get_db
-from security import decode_token, hash_api_key
+from .database import get_db
+from .security import decode_token, hash_api_key
 
 security = HTTPBearer(auto_error=False)
 

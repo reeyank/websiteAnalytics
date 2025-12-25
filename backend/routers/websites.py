@@ -4,10 +4,10 @@ from sqlalchemy import text, insert
 from datetime import datetime
 import uuid
 
-from database import get_db
-from models import Website, ApiKey
-from security import generate_api_key
-from dependencies import get_current_user, verify_site_ownership
+from ..database import get_db
+from ..models import Website, ApiKey
+from ..security import generate_api_key
+from ..dependencies import get_current_user, verify_site_ownership
 from pydantic import BaseModel
 from typing import Optional, List
 
@@ -148,7 +148,7 @@ async def get_website(
     website = verify_site_ownership(current_user["user_id"], site_id, db)
 
     # Generate script tag
-    script_tag = f'<script src="/script.js" data-site-id="{site_id}"></script>'
+    script_tag = f'<script src="https://api.publickeyboard.com/script.js" data-site-id="{site_id}"></script>'
 
     return WebsiteWithScript(
         site_id=website["site_id"],
