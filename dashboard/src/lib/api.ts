@@ -1,6 +1,6 @@
 import { getAccessToken, refreshAccessToken, getCurrentSiteId } from "./auth";
 
-const API_BASE = "http://api.publickeyboard.com";
+const API_BASE = "https://api.publickeyboard.com";
 
 export interface Stats {
   site_id: string;
