@@ -8,7 +8,6 @@ import {
   Trash2,
   Copy,
   Check,
-  Key,
   ChevronDown,
   ChevronUp,
   ExternalLink,
@@ -17,11 +16,7 @@ import {
   createWebsite,
   deleteWebsite,
   getWebsite,
-  createApiKey,
-  revokeApiKey,
-  getApiKeys,
   type WebsiteWithScript,
-  type ApiKey,
 } from "@/lib/auth";
 
 export default function WebsitesPage() {
@@ -33,9 +28,7 @@ export default function WebsitesPage() {
   const [error, setError] = useState("");
   const [expandedSite, setExpandedSite] = useState<string | null>(null);
   const [siteDetails, setSiteDetails] = useState<Record<string, WebsiteWithScript>>({});
-  const [siteApiKeys, setSiteApiKeys] = useState<Record<string, ApiKey[]>>({});
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [newApiKey, setNewApiKey] = useState<string | null>(null);
 
   const handleCopy = async (text: string, field: string) => {
     await navigator.clipboard.writeText(text);
@@ -55,7 +48,6 @@ export default function WebsitesPage() {
       setNewSiteName("");
       setNewSiteDomain("");
       setExpandedSite(site.site_id);
-      setNewApiKey(site.api_key);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create website");
     } finally {
@@ -89,40 +81,11 @@ export default function WebsitesPage() {
 
     if (!siteDetails[siteId]) {
       try {
-        const [details, keys] = await Promise.all([
-          getWebsite(siteId),
-          getApiKeys(siteId),
-        ]);
+        const details = await getWebsite(siteId);
         setSiteDetails((prev) => ({ ...prev, [siteId]: details }));
-        setSiteApiKeys((prev) => ({ ...prev, [siteId]: keys }));
       } catch (err) {
         console.error("Failed to load site details:", err);
       }
-    }
-  };
-
-  const handleCreateApiKey = async (siteId: string) => {
-    try {
-      const { api_key } = await createApiKey(siteId);
-      setNewApiKey(api_key);
-      const keys = await getApiKeys(siteId);
-      setSiteApiKeys((prev) => ({ ...prev, [siteId]: keys }));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create API key");
-    }
-  };
-
-  const handleRevokeApiKey = async (siteId: string, keyId: string) => {
-    if (!confirm("Are you sure you want to revoke this API key?")) {
-      return;
-    }
-
-    try {
-      await revokeApiKey(siteId, keyId);
-      const keys = await getApiKeys(siteId);
-      setSiteApiKeys((prev) => ({ ...prev, [siteId]: keys }));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to revoke API key");
     }
   };
 
@@ -135,7 +98,7 @@ export default function WebsitesPage() {
             Websites
           </h1>
           <p className="text-sm sm:text-base text-gray-400">
-            Manage your tracked websites and API keys
+            Manage your tracked websites
           </p>
         </div>
         <button
@@ -151,43 +114,6 @@ export default function WebsitesPage() {
       {error && (
         <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
           {error}
-        </div>
-      )}
-
-      {/* New API Key Alert */}
-      {newApiKey && (
-        <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-green-400 font-medium mb-2">
-                API Key Created Successfully
-              </p>
-              <p className="text-gray-400 text-sm mb-3">
-                Copy this key now. You won't be able to see it again.
-              </p>
-              <div className="flex items-center gap-2">
-                <code className="px-3 py-2 rounded-lg bg-[var(--background)] text-white font-mono text-sm break-all">
-                  {newApiKey}
-                </code>
-                <button
-                  onClick={() => handleCopy(newApiKey, "new-api-key")}
-                  className="p-2 rounded-lg bg-[var(--background)] hover:bg-[var(--border)] transition-colors"
-                >
-                  {copiedField === "new-api-key" ? (
-                    <Check className="w-4 h-4 text-green-400" />
-                  ) : (
-                    <Copy className="w-4 h-4 text-gray-400" />
-                  )}
-                </button>
-              </div>
-            </div>
-            <button
-              onClick={() => setNewApiKey(null)}
-              className="text-gray-400 hover:text-white"
-            >
-              ×
-            </button>
-          </div>
         </div>
       )}
 
@@ -341,52 +267,6 @@ export default function WebsitesPage() {
                       </div>
                     </div>
                   )}
-
-                  {/* API Keys */}
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-sm font-medium text-gray-300 flex items-center gap-2">
-                        <Key className="w-4 h-4" />
-                        API Keys
-                      </h4>
-                      <button
-                        onClick={() => handleCreateApiKey(site.site_id)}
-                        className="px-3 py-1 rounded-lg bg-[var(--background)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors text-sm text-white flex items-center gap-1"
-                      >
-                        <Plus className="w-3 h-3" />
-                        New Key
-                      </button>
-                    </div>
-                    <div className="space-y-2">
-                      {(siteApiKeys[site.site_id] || []).length === 0 ? (
-                        <p className="text-gray-500 text-sm">No API keys</p>
-                      ) : (
-                        (siteApiKeys[site.site_id] || []).map((key) => (
-                          <div
-                            key={key.key_id}
-                            className="flex items-center justify-between p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]"
-                          >
-                            <div>
-                              <p className="text-white text-sm font-medium">
-                                {key.name}
-                              </p>
-                              <p className="text-gray-500 text-xs font-mono">
-                                {key.key_prefix}
-                              </p>
-                            </div>
-                            <button
-                              onClick={() =>
-                                handleRevokeApiKey(site.site_id, key.key_id)
-                              }
-                              className="p-2 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
 
                   {/* Site ID */}
                   <div>

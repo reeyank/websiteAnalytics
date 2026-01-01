@@ -16,22 +16,10 @@ export interface Website {
   created_at: string;
 }
 
-export interface WebsiteWithApiKey extends Website {
-  api_key: string;
-}
-
 export interface WebsiteWithScript extends Website {
   script_tag: string;
 }
 
-export interface ApiKey {
-  key_id: string;
-  site_id: string;
-  key_prefix: string;
-  name: string;
-  permissions: string;
-  created_at: string;
-}
 
 export interface AuthTokens {
   access_token: string;
@@ -225,7 +213,7 @@ export async function getWebsites(): Promise<Website[]> {
 export async function createWebsite(
   name: string,
   domain: string
-): Promise<WebsiteWithApiKey> {
+): Promise<Website> {
   const token = getAccessToken();
   if (!token) throw new Error("Not authenticated");
 
@@ -268,51 +256,4 @@ export async function deleteWebsite(siteId: string): Promise<void> {
   });
 
   if (!res.ok) throw new Error("Failed to delete website");
-}
-
-export async function getApiKeys(siteId: string): Promise<ApiKey[]> {
-  const token = getAccessToken();
-  if (!token) throw new Error("Not authenticated");
-
-  const res = await fetch(`${API_BASE}/websites/${siteId}/api-keys`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to fetch API keys");
-  return res.json();
-}
-
-export async function createApiKey(
-  siteId: string,
-  name?: string
-): Promise<{ api_key: string; key_id: string }> {
-  const token = getAccessToken();
-  if (!token) throw new Error("Not authenticated");
-
-  const res = await fetch(`${API_BASE}/websites/${siteId}/api-keys`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ name: name || "Default" }),
-  });
-
-  if (!res.ok) throw new Error("Failed to create API key");
-  return res.json();
-}
-
-export async function revokeApiKey(
-  siteId: string,
-  keyId: string
-): Promise<void> {
-  const token = getAccessToken();
-  if (!token) throw new Error("Not authenticated");
-
-  const res = await fetch(`${API_BASE}/websites/${siteId}/api-keys/${keyId}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-
-  if (!res.ok) throw new Error("Failed to revoke API key");
 }
