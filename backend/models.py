@@ -93,30 +93,6 @@ class Website(Base):
     is_deleted = Column(Integer, default=0)
 
 
-class ApiKey(Base):
-    """API keys for website tracking"""
-    __tablename__ = "api_keys"
-    __table_args__ = (
-        engines.ReplacingMergeTree(
-            order_by='key_id',
-            version='updated_at'
-        ),
-    )
-
-    key_id = Column(String, primary_key=True)
-    site_id = Column(String)
-    user_id = Column(String)
-    key_hash = Column(String)
-    key_prefix = Column(String)  # "wa_xxxx..." for display
-    name = Column(String, default="Default")
-    permissions = Column(String, default="write")
-    created_at = Column(DateTime, default=datetime.utcnow)
-    last_used_at = Column(DateTime, default=datetime(1970, 1, 1, 0, 0, 0))
-    expires_at = Column(DateTime, default=datetime(1970, 1, 1, 0, 0, 0))
-    revoked_at = Column(DateTime, default=datetime(1970, 1, 1, 0, 0, 0))
-    updated_at = Column(DateTime, default=datetime.utcnow)
-
-
 # =============================================================================
 # ANALYTICS MODELS (with site_id for multi-tenancy)
 # =============================================================================
