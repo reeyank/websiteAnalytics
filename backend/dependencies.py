@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from typing import Optional
 from .database import get_db
-from .security import decode_token, hash_api_key
+from .security import decode_token
 
 security = HTTPBearer(auto_error=False)
 
@@ -57,41 +57,6 @@ async def get_current_user_optional(
         return await get_current_user(credentials, db)
     except HTTPException:
         return None
-
-
-async def get_site_from_api_key(
-    api_key: str,
-    db: Session = Depends(get_db)
-) -> tuple[dict, dict]:
-    """Validate API key and return associated website and api_key record"""
-    key_hash = hash_api_key(api_key)
-
-    # Query API key
-    api_key_record = db.execute(
-        text("""
-            SELECT * FROM api_keys FINAL
-            WHERE key_hash = :hash
-            AND revoked_at = toDateTime(0)
-            AND (expires_at = toDateTime(0) OR expires_at > now())
-        """),
-        {"hash": key_hash}
-    ).fetchone()
-
-    if not api_key_record:
-        raise HTTPException(status_code=401, detail="Invalid API key")
-
-    api_key_dict = dict(api_key_record._mapping)
-
-    # Query website
-    website = db.execute(
-        text("SELECT * FROM websites FINAL WHERE site_id = :sid AND is_deleted = 0"),
-        {"sid": api_key_dict["site_id"]}
-    ).fetchone()
-
-    if not website:
-        raise HTTPException(status_code=404, detail="Website not found")
-
-    return dict(website._mapping), api_key_dict
 
 
 def verify_site_ownership(user_id: str, site_id: str, db: Session) -> dict:

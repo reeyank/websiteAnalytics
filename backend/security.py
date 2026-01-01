@@ -1,4 +1,3 @@
-import secrets
 import hashlib
 import bcrypt
 from datetime import datetime, timedelta
@@ -47,18 +46,6 @@ def decode_token(token: str) -> Optional[dict]:
         return jwt.decode(token, settings.JWT_SECRET_KEY, algorithms=[settings.JWT_ALGORITHM])
     except JWTError:
         return None
-
-
-def generate_api_key() -> tuple[str, str]:
-    """Generate an API key and return (full_key, key_hash)"""
-    key = f"wa_{secrets.token_urlsafe(32)}"
-    key_hash = hashlib.sha256(key.encode()).hexdigest()
-    return key, key_hash
-
-
-def hash_api_key(key: str) -> str:
-    """Hash an API key for storage/lookup"""
-    return hashlib.sha256(key.encode()).hexdigest()
 
 
 def hash_token(token: str) -> str:
