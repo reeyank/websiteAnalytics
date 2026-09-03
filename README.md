@@ -1,5 +1,7 @@
 # Website Analytics - FastAPI Backend
 
+Website Analytics is a lightweight, self-hosted analytics platform that pairs a browser tracking script with a FastAPI backend to capture pageviews, custom events, clicks, scroll depth, and full session replays (via rrweb), persisting everything to SQLite and exposing endpoints for event collection, statistics, and session playback.
+
 This project includes a comprehensive website analytics tracking script (`script.js`) and a FastAPI backend to collect and store analytics events.
 
 ## Features
