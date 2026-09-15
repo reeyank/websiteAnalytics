@@ -195,3 +195,7 @@ Once the server is running, visit:
 - Bot traffic is automatically filtered out
 - Session recordings are automatically masked for sensitive data
 - All timestamps are stored in UTC
+
+## Related Project: PromptAndPlay
+
+[PromptAndPlay](https://github.com/reeyank/PromptAndPlay) is a companion marketing-tracking project maintained alongside this analytics platform. It is a static site/landing page (`index.html`) served with Cloudflare Pages Functions, using `functions/_middleware.js` to run edge middleware on incoming requests. The repository also includes a dedicated `meta-capi-worker` Cloudflare Worker (`worker.js`, `email-template.js`, `wrangler.toml`) that implements server-side Meta Conversions API (CAPI) event forwarding for ad-conversion tracking, along with transactional email templating. Together, these projects support tracking and measuring marketing performance across the landing page and downstream conversion events.
