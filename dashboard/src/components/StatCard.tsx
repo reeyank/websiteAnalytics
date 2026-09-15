@@ -34,20 +34,22 @@ export default function StatCard({
     <div className="stat-card group">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-400 mb-1">{title}</p>
-          <p className="text-3xl font-bold text-white mb-1">
+          <p className="text-sm text-[var(--muted-foreground)] mb-1">{title}</p>
+          <p className="text-3xl font-bold text-[var(--foreground)] mb-1">
             {typeof value === "number" ? value.toLocaleString() : value}
           </p>
-          {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-[var(--muted-foreground)]">{subtitle}</p>}
           {trend && (
             <div
               className={`flex items-center gap-1 mt-2 text-sm ${
-                trend.isPositive ? "text-green-400" : "text-red-400"
+                trend.isPositive
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-red-600 dark:text-red-400"
               }`}
             >
               <span>{trend.isPositive ? "+" : "-"}</span>
               <span>{Math.abs(trend.value)}%</span>
-              <span className="text-gray-500">vs last period</span>
+              <span className="text-[var(--muted-foreground)]">vs last period</span>
             </div>
           )}
         </div>

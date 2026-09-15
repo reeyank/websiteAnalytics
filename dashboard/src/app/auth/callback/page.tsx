@@ -31,8 +31,8 @@ function AuthCallbackContent() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Authentication Failed</h1>
-          <p className="text-gray-400 mb-6">{error}</p>
+          <h1 className="text-2xl font-bold text-[var(--foreground)] mb-4">Authentication Failed</h1>
+          <p className="text-[var(--muted-foreground)] mb-6">{error}</p>
           <a
             href="/login"
             className="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-medium transition-colors"
@@ -48,7 +48,7 @@ function AuthCallbackContent() {
     <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-        <p className="text-gray-400">Completing sign in...</p>
+        <p className="text-[var(--muted-foreground)]">Completing sign in...</p>
       </div>
     </div>
   );
@@ -61,7 +61,7 @@ export default function AuthCallbackPage() {
         <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-            <p className="text-gray-400">Loading...</p>
+            <p className="text-[var(--muted-foreground)]">Loading...</p>
           </div>
         </div>
       }

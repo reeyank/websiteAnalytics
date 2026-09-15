@@ -1,8 +1,28 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  color-scheme: light;
+  --background: #f4f4f7;
+  --foreground: #14141c;
+  --muted-foreground: #5c5c6e;
+  --card: #ffffff;
+  --card-hover: #f8f8fb;
+  --border: #e2e2ea;
+  --accent: #7c3aed;
+  --accent-glow: rgba(124, 58, 237, 0.25);
+  --success: #059669;
+  --warning: #b45309;
+  --error: #dc2626;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+}
+
+.dark {
+  color-scheme: dark;
   --background: #0a0a0f;
   --foreground: #ededed;
+  --muted-foreground: #9a9aab;
   --card: #12121a;
   --card-hover: #1a1a25;
   --border: #2a2a3a;
@@ -11,6 +31,7 @@
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
+  --glass-bg: rgba(18, 18, 26, 0.8);
 }
 
 * {
@@ -28,6 +49,7 @@ body {
   background: var(--background);
   font-family: system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Custom scrollbar */
@@ -55,7 +77,7 @@ body {
 }
 
 .glass {
-  background: rgba(18, 18, 26, 0.8);
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
 }
