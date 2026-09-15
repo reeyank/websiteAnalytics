@@ -53,7 +53,7 @@ export default function Heatmap({ data, width = 800, height = 600 }: HeatmapProp
 
   if (data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
+      <div className="flex items-center justify-center h-64 text-[var(--muted-foreground)]">
         No heatmap data available
       </div>
     );
@@ -63,18 +63,18 @@ export default function Heatmap({ data, width = 800, height = 600 }: HeatmapProp
     <div className="relative">
       {/* Legend */}
       <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm text-gray-400">Intensity:</span>
+        <span className="text-sm text-[var(--muted-foreground)]">Intensity:</span>
         <div className="flex items-center gap-1">
           <div className="w-4 h-4 rounded-full bg-purple-500/30" />
-          <span className="text-xs text-gray-500">Low</span>
+          <span className="text-xs text-[var(--muted-foreground)]">Low</span>
         </div>
         <div className="flex items-center gap-1">
           <div className="w-4 h-4 rounded-full bg-pink-500/60" />
-          <span className="text-xs text-gray-500">Medium</span>
+          <span className="text-xs text-[var(--muted-foreground)]">Medium</span>
         </div>
         <div className="flex items-center gap-1">
           <div className="w-4 h-4 rounded-full bg-red-500/90" />
-          <span className="text-xs text-gray-500">High</span>
+          <span className="text-xs text-[var(--muted-foreground)]">High</span>
         </div>
       </div>
 
@@ -88,8 +88,8 @@ export default function Heatmap({ data, width = 800, height = 600 }: HeatmapProp
           className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #fff 1px, transparent 1px),
-              linear-gradient(to bottom, #fff 1px, transparent 1px)
+              linear-gradient(to right, var(--foreground) 1px, transparent 1px),
+              linear-gradient(to bottom, var(--foreground) 1px, transparent 1px)
             `,
             backgroundSize: "50px 50px",
           }}
@@ -127,7 +127,7 @@ export default function Heatmap({ data, width = 800, height = 600 }: HeatmapProp
         {normalizedData.map((point, index) => (
           <div
             key={`marker-${index}`}
-            className="absolute w-2 h-2 rounded-full bg-white/50 transform -translate-x-1 -translate-y-1 pointer-events-none"
+            className="absolute w-2 h-2 rounded-full bg-[var(--foreground)]/50 transform -translate-x-1 -translate-y-1 pointer-events-none"
             style={{
               left: point.scaledX,
               top: point.scaledY,
@@ -144,18 +144,18 @@ export default function Heatmap({ data, width = 800, height = 600 }: HeatmapProp
               top: Math.min((hoveredPoint as any).scaledY + 15, height - 60),
             }}
           >
-            <p className="text-gray-400">
-              Position: <span className="text-white">{hoveredPoint.x}, {hoveredPoint.y}</span>
+            <p className="text-[var(--muted-foreground)]">
+              Position: <span className="text-[var(--foreground)]">{hoveredPoint.x}, {hoveredPoint.y}</span>
             </p>
-            <p className="text-gray-400">
-              Count: <span className="text-purple-400 font-bold">{hoveredPoint.count}</span>
+            <p className="text-[var(--muted-foreground)]">
+              Count: <span className="text-purple-600 dark:text-purple-400 font-bold">{hoveredPoint.count}</span>
             </p>
           </div>
         )}
       </div>
 
       {/* Stats */}
-      <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
+      <div className="flex items-center justify-between mt-4 text-sm text-[var(--muted-foreground)]">
         <span>{data.length} unique positions</span>
         <span>Max interactions: {maxCount}</span>
       </div>

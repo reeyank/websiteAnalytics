@@ -65,8 +65,8 @@ export default function HeatmapsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Heatmaps</h1>
-          <p className="text-gray-400">
+          <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">Heatmaps</h1>
+          <p className="text-[var(--muted-foreground)]">
             Visualize where users interact on your pages
           </p>
         </div>
@@ -80,14 +80,14 @@ export default function HeatmapsPage() {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[var(--card)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors min-w-[300px]"
           >
-            <MousePointer className="w-5 h-5 text-purple-400" />
-            <span className="text-white flex-1 text-left truncate">
+            <MousePointer className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+            <span className="text-[var(--foreground)] flex-1 text-left truncate">
               {selectedSession
                 ? `Session: ${selectedSession.slice(0, 16)}...`
                 : "Select a session"}
             </span>
             <ChevronDown
-              className={`w-5 h-5 text-gray-400 transition-transform ${
+              className={`w-5 h-5 text-[var(--muted-foreground)] transition-transform ${
                 isDropdownOpen ? "rotate-180" : ""
               }`}
             />
@@ -104,14 +104,14 @@ export default function HeatmapsPage() {
                   }}
                   className={`w-full px-4 py-3 text-left hover:bg-[var(--card-hover)] transition-colors ${
                     selectedSession === session.session_id
-                      ? "bg-purple-500/20 text-purple-400"
-                      : "text-gray-300"
+                      ? "bg-purple-500/20 text-purple-600 dark:text-purple-400"
+                      : "text-[var(--foreground)]"
                   }`}
                 >
                   <p className="font-mono text-sm truncate">
                     {session.session_id}
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-[var(--muted-foreground)] mt-1">
                     {session.last_seen
                       ? new Date(session.last_seen).toLocaleString()
                       : "Unknown"}
@@ -119,7 +119,7 @@ export default function HeatmapsPage() {
                 </button>
               ))}
               {sessions.length === 0 && (
-                <p className="px-4 py-3 text-gray-500">No sessions available</p>
+                <p className="px-4 py-3 text-[var(--muted-foreground)]">No sessions available</p>
               )}
             </div>
           )}
@@ -143,21 +143,21 @@ export default function HeatmapsPage() {
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
               <div className="w-12 h-12 mx-auto mb-4 rounded-full border-4 border-purple-500 border-t-transparent animate-spin" />
-              <p className="text-gray-400">Loading heatmap data...</p>
+              <p className="text-[var(--muted-foreground)]">Loading heatmap data...</p>
             </div>
           </div>
         ) : !selectedSession ? (
           <div className="text-center py-20">
-            <MousePointer className="w-16 h-16 mx-auto mb-4 text-gray-600" />
-            <p className="text-gray-400">Select a session to view its heatmap</p>
+            <MousePointer className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-600" />
+            <p className="text-[var(--muted-foreground)]">Select a session to view its heatmap</p>
           </div>
         ) : heatmapData && heatmapData.heatmap.length > 0 ? (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white">
+              <h2 className="text-xl font-semibold text-[var(--foreground)]">
                 Mouse Activity Heatmap
               </h2>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
                 <span>{heatmapData.total_points} tracked positions</span>
               </div>
             </div>
@@ -165,9 +165,9 @@ export default function HeatmapsPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <MousePointer className="w-16 h-16 mx-auto mb-4 text-gray-600" />
-            <p className="text-gray-400 mb-2">No heatmap data for this session</p>
-            <p className="text-gray-500 text-sm">
+            <MousePointer className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-600" />
+            <p className="text-[var(--muted-foreground)] mb-2">No heatmap data for this session</p>
+            <p className="text-[var(--muted-foreground)] text-sm">
               Mouse movements are sampled to reduce data volume
             </p>
           </div>
@@ -177,23 +177,23 @@ export default function HeatmapsPage() {
       {/* Heatmap Info */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20">
-          <h3 className="text-lg font-semibold text-white mb-2">How it works</h3>
-          <p className="text-gray-400 text-sm">
+          <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">How it works</h3>
+          <p className="text-[var(--muted-foreground)] text-sm">
             Mouse positions are sampled every 5th movement to reduce data while
             maintaining accuracy. Points are aggregated into a 10px grid for
             visualization.
           </p>
         </div>
         <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20">
-          <h3 className="text-lg font-semibold text-white mb-2">Color Scale</h3>
-          <p className="text-gray-400 text-sm">
+          <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">Color Scale</h3>
+          <p className="text-[var(--muted-foreground)] text-sm">
             Purple indicates low activity, transitioning through pink to red for
             high-activity hotspots where users frequently interact.
           </p>
         </div>
         <div className="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20">
-          <h3 className="text-lg font-semibold text-white mb-2">Use Cases</h3>
-          <p className="text-gray-400 text-sm">
+          <h3 className="text-lg font-semibold text-[var(--foreground)] mb-2">Use Cases</h3>
+          <p className="text-[var(--muted-foreground)] text-sm">
             Identify UI hotspots, optimize button placement, and understand user
             attention patterns to improve your website&apos;s UX.
           </p>

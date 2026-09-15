@@ -76,10 +76,10 @@ export default function TestPage() {
       <div className="space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">
             Tracking Test Page
           </h1>
-          <p className="text-gray-400">
+          <p className="text-[var(--muted-foreground)]">
             Interact with this page to generate analytics events
           </p>
         </div>
@@ -95,21 +95,21 @@ export default function TestPage() {
           }`}
         >
           {trackingStatus === "active" ? (
-            <CheckCircle2 className="w-6 h-6 text-green-400" />
+            <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
           ) : trackingStatus === "error" ? (
-            <AlertTriangle className="w-6 h-6 text-red-400" />
+            <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
           ) : (
             <div className="w-6 h-6 rounded-full border-2 border-yellow-400 border-t-transparent animate-spin" />
           )}
           <div>
-            <p className="font-medium text-white">
+            <p className="font-medium text-[var(--foreground)]">
               {trackingStatus === "active"
                 ? "Tracking Active"
                 : trackingStatus === "error"
                 ? "Tracking Error"
                 : "Loading Tracker..."}
             </p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-[var(--muted-foreground)]">
               {trackingStatus === "active"
                 ? "All interactions are being recorded"
                 : trackingStatus === "error"
@@ -125,11 +125,11 @@ export default function TestPage() {
           <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-purple-500/20">
-                <MousePointer className="w-5 h-5 text-purple-400" />
+                <MousePointer className="w-5 h-5 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Click Events</h3>
+              <h3 className="text-lg font-semibold text-[var(--foreground)]">Click Events</h3>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-[var(--muted-foreground)] text-sm mb-4">
               Click anywhere on this card or the buttons below
             </p>
             <div className="space-y-2">
@@ -141,7 +141,7 @@ export default function TestPage() {
               </button>
               <button
                 onClick={() => addLog("Secondary button clicked")}
-                className="w-full px-4 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-white hover:border-purple-500 transition-colors"
+                className="w-full px-4 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] hover:border-purple-500 transition-colors"
               >
                 Secondary Button
               </button>
@@ -152,20 +152,20 @@ export default function TestPage() {
           <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-green-500/20">
-                <Scroll className="w-5 h-5 text-green-400" />
+                <Scroll className="w-5 h-5 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Scroll Events</h3>
+              <h3 className="text-lg font-semibold text-[var(--foreground)]">Scroll Events</h3>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-[var(--muted-foreground)] text-sm mb-4">
               Scroll this container to trigger scroll tracking
             </p>
-            <div className="h-32 overflow-y-auto rounded-lg bg-[var(--background)] p-4 text-sm text-gray-500">
+            <div className="h-32 overflow-y-auto rounded-lg bg-[var(--background)] p-4 text-sm text-[var(--muted-foreground)]">
               <p className="mb-4">Scroll down to see more content...</p>
               <p className="mb-4">Keep scrolling...</p>
               <p className="mb-4">Almost there...</p>
               <p className="mb-4">A bit more...</p>
               <p className="mb-4">You made it! Scroll depth is being tracked.</p>
-              <p className="text-green-400">End of scrollable area</p>
+              <p className="text-green-600 dark:text-green-400">End of scrollable area</p>
             </div>
           </div>
 
@@ -173,18 +173,18 @@ export default function TestPage() {
           <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-blue-500/20">
-                <PointerIcon className="w-5 h-5 text-blue-400" />
+                <PointerIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Mouse Tracking</h3>
+              <h3 className="text-lg font-semibold text-[var(--foreground)]">Mouse Tracking</h3>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-[var(--muted-foreground)] text-sm mb-4">
               Move your mouse around this area
             </p>
             <div
               className="h-32 rounded-lg bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 flex items-center justify-center cursor-crosshair"
               onMouseMove={() => {}}
             >
-              <p className="text-blue-400 text-sm">Mouse tracking zone</p>
+              <p className="text-blue-600 dark:text-blue-400 text-sm">Mouse tracking zone</p>
             </div>
           </div>
 
@@ -192,23 +192,23 @@ export default function TestPage() {
           <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-cyan-500/20">
-                <FormInput className="w-5 h-5 text-cyan-400" />
+                <FormInput className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Form Events</h3>
+              <h3 className="text-lg font-semibold text-[var(--foreground)]">Form Events</h3>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-[var(--muted-foreground)] text-sm mb-4">
               Interact with form fields
             </p>
             <div className="space-y-3">
               <input
                 type="text"
                 placeholder="Text input..."
-                className="w-full px-3 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] placeholder-gray-500 focus:outline-none focus:border-cyan-500"
                 onFocus={() => addLog("Text input focused")}
                 onBlur={() => addLog("Text input blurred")}
               />
               <select
-                className="w-full px-3 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-white focus:outline-none focus:border-cyan-500"
+                className="w-full px-3 py-2 rounded-lg bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:border-cyan-500"
                 onChange={() => addLog("Select value changed")}
               >
                 <option>Select an option</option>
@@ -222,23 +222,23 @@ export default function TestPage() {
           <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-orange-500/20">
-                <Zap className="w-5 h-5 text-orange-400" />
+                <Zap className="w-5 h-5 text-orange-600 dark:text-orange-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Custom Events</h3>
+              <h3 className="text-lg font-semibold text-[var(--foreground)]">Custom Events</h3>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-[var(--muted-foreground)] text-sm mb-4">
               Trigger custom analytics events
             </p>
             <div className="space-y-2">
               <button
                 onClick={triggerCustomEvent}
-                className="w-full px-4 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30 text-orange-400 hover:bg-orange-500/30 transition-colors"
+                className="w-full px-4 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30 text-orange-700 dark:text-orange-400 hover:bg-orange-500/30 transition-colors"
               >
                 Track Custom Event
               </button>
               <button
                 onClick={triggerIdentify}
-                className="w-full px-4 py-2 rounded-lg bg-pink-500/20 border border-pink-500/30 text-pink-400 hover:bg-pink-500/30 transition-colors"
+                className="w-full px-4 py-2 rounded-lg bg-pink-500/20 border border-pink-500/30 text-pink-700 dark:text-pink-400 hover:bg-pink-500/30 transition-colors"
               >
                 Identify User
               </button>
@@ -249,23 +249,23 @@ export default function TestPage() {
           <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-red-500/20">
-                <AlertTriangle className="w-5 h-5 text-red-400" />
+                <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Actions</h3>
+              <h3 className="text-lg font-semibold text-[var(--foreground)]">Actions</h3>
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-[var(--muted-foreground)] text-sm mb-4">
               Test error tracking and flush events
             </p>
             <div className="space-y-2">
               <button
                 onClick={flushEvents}
-                className="w-full px-4 py-2 rounded-lg bg-green-500/20 border border-green-500/30 text-green-400 hover:bg-green-500/30 transition-colors"
+                className="w-full px-4 py-2 rounded-lg bg-green-500/20 border border-green-500/30 text-green-700 dark:text-green-400 hover:bg-green-500/30 transition-colors"
               >
                 Flush Events Now
               </button>
               <button
                 onClick={triggerError}
-                className="w-full px-4 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30 transition-colors"
+                className="w-full px-4 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-700 dark:text-red-400 hover:bg-red-500/30 transition-colors"
               >
                 Trigger Test Error
               </button>
@@ -275,15 +275,15 @@ export default function TestPage() {
 
         {/* Event Log */}
         <div className="p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
-          <h3 className="text-lg font-semibold text-white mb-4">Event Log</h3>
+          <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">Event Log</h3>
           <div className="h-48 overflow-y-auto rounded-lg bg-[var(--background)] p-4 font-mono text-sm">
             {eventLog.length === 0 ? (
-              <p className="text-gray-500">
+              <p className="text-[var(--muted-foreground)]">
                 Interact with the page to see events here...
               </p>
             ) : (
               eventLog.map((log, index) => (
-                <p key={index} className="text-gray-400 mb-1">
+                <p key={index} className="text-[var(--muted-foreground)] mb-1">
                   {log}
                 </p>
               ))
@@ -293,10 +293,10 @@ export default function TestPage() {
 
         {/* Instructions */}
         <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20">
-          <h3 className="text-lg font-semibold text-white mb-3">
+          <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3">
             How to Test
           </h3>
-          <ol className="list-decimal list-inside space-y-2 text-gray-400">
+          <ol className="list-decimal list-inside space-y-2 text-[var(--muted-foreground)]">
             <li>Make sure the FastAPI backend is running on port 8000</li>
             <li>Interact with the elements above (click, scroll, type, etc.)</li>
             <li>Events are batched and sent every 5 seconds or when 10 events accumulate</li>

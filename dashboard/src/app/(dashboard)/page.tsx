@@ -64,10 +64,10 @@ export default function Dashboard() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center p-8 rounded-2xl bg-[var(--card)] border border-[var(--border)] max-w-md">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/20 flex items-center justify-center">
-            <Plus className="w-8 h-8 text-purple-400" />
+            <Plus className="w-8 h-8 text-purple-600 dark:text-purple-400" />
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">Add Your First Website</h2>
-          <p className="text-gray-400 mb-6">
+          <h2 className="text-xl font-bold text-[var(--foreground)] mb-2">Add Your First Website</h2>
+          <p className="text-[var(--muted-foreground)] mb-6">
             Start tracking analytics by adding your first website.
           </p>
           <button
@@ -86,7 +86,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-purple-500 border-t-transparent animate-spin" />
-          <p className="text-gray-400">Loading analytics...</p>
+          <p className="text-[var(--muted-foreground)]">Loading analytics...</p>
         </div>
       </div>
     );
@@ -97,10 +97,10 @@ export default function Dashboard() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center p-8 rounded-2xl bg-red-500/10 border border-red-500/30 max-w-md">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
-            <Activity className="w-8 h-8 text-red-400" />
+            <Activity className="w-8 h-8 text-red-600 dark:text-red-400" />
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">Connection Error</h2>
-          <p className="text-gray-400 mb-4">{error}</p>
+          <h2 className="text-xl font-bold text-[var(--foreground)] mb-2">Connection Error</h2>
+          <p className="text-[var(--muted-foreground)] mb-4">{error}</p>
           <button
             onClick={fetchData}
             className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
@@ -117,10 +117,10 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] mb-1 sm:mb-2">
             {currentWebsite?.name || "Analytics Dashboard"}
           </h1>
-          <p className="text-sm sm:text-base text-gray-400">
+          <p className="text-sm sm:text-base text-[var(--muted-foreground)]">
             {currentWebsite?.domain || "Real-time insights into your website traffic"}
           </p>
         </div>
@@ -171,8 +171,8 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Events by Type */}
         <div className="p-4 sm:p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-purple-400" />
+          <h2 className="text-lg sm:text-xl font-semibold text-[var(--foreground)] mb-4 sm:mb-6 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             Events by Type
           </h2>
           <EventChart data={stats?.events_by_type || {}} />
@@ -180,13 +180,13 @@ export default function Dashboard() {
 
         {/* Recent Sessions */}
         <div className="p-4 sm:p-6 rounded-2xl bg-[var(--card)] border border-[var(--border)]">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-blue-400" />
+          <h2 className="text-lg sm:text-xl font-semibold text-[var(--foreground)] mb-4 sm:mb-6 flex items-center gap-2">
+            <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             Recent Sessions
           </h2>
           <div className="space-y-3">
             {sessions.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No sessions yet</p>
+              <p className="text-[var(--muted-foreground)] text-center py-8">No sessions yet</p>
             ) : (
               sessions.map((session) => (
                 <a
@@ -197,20 +197,20 @@ export default function Dashboard() {
                   <div className="flex items-center justify-between gap-2">
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-xs sm:text-sm text-white font-mono truncate max-w-[100px] sm:max-w-[150px]">
+                        <p className="text-xs sm:text-sm text-[var(--foreground)] font-mono truncate max-w-[100px] sm:max-w-[150px]">
                           {session.session_id.slice(0, 8)}...
                         </p>
                         <span
                           className={`px-2 py-0.5 rounded-full text-xs ${
                             session.status === "active"
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-gray-500/20 text-gray-400"
+                              ? "bg-green-500/20 text-green-700 dark:text-green-400"
+                              : "bg-gray-500/20 text-gray-700 dark:text-gray-400"
                           }`}
                         >
                           {session.status}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-[var(--muted-foreground)] mt-1">
                         {session.last_seen
                           ? formatDistanceToNow(new Date(session.last_seen), {
                               addSuffix: true,
@@ -229,9 +229,9 @@ export default function Dashboard() {
                         : "bg-gray-500/20 group-hover:bg-gray-500/30"
                     }`}>
                       {session.status === "active" ? (
-                        <UserCheck className="w-4 h-4 text-green-400" />
+                        <UserCheck className="w-4 h-4 text-green-600 dark:text-green-400" />
                       ) : (
-                        <UserX className="w-4 h-4 text-gray-400" />
+                        <UserX className="w-4 h-4 text-gray-600 dark:text-gray-400" />
                       )}
                     </div>
                   </div>
@@ -245,7 +245,7 @@ export default function Dashboard() {
       {/* Quick Stats */}
       {stats && Object.keys(stats.events_by_type).length > 0 && (
         <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-          <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">
+          <h3 className="text-base sm:text-lg font-semibold text-[var(--foreground)] mb-3 sm:mb-4">
             Event Breakdown
           </h3>
           <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -254,8 +254,8 @@ export default function Dashboard() {
                 key={type}
                 className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[var(--card)] border border-[var(--border)] flex items-center gap-2"
               >
-                <span className="text-gray-400 text-xs sm:text-sm">{type}</span>
-                <span className="text-white font-bold text-sm sm:text-base">{count}</span>
+                <span className="text-[var(--muted-foreground)] text-xs sm:text-sm">{type}</span>
+                <span className="text-[var(--foreground)] font-bold text-sm sm:text-base">{count}</span>
               </div>
             ))}
           </div>
