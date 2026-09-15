@@ -16,8 +16,11 @@ import {
   ChevronDown,
   LogOut,
   Settings,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
+import { useTheme } from "./ThemeProvider";
 
 const navItems = [
   { href: "/", icon: LayoutDashboard, label: "Dashboard" },
@@ -31,6 +34,7 @@ const navItems = [
 export default function Sidebar() {
   const pathname = usePathname();
   const { user, websites, currentWebsite, setCurrentWebsite, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [showSiteSelector, setShowSiteSelector] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -70,15 +74,24 @@ export default function Sidebar() {
             <div className="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <h1 className="text-lg font-bold text-white">Analytics</h1>
+            <h1 className="text-lg font-bold text-[var(--foreground)]">Analytics</h1>
           </div>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-white"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -98,16 +111,25 @@ export default function Sidebar() {
       >
         <div className="p-6 pt-20 lg:pt-6 flex flex-col h-full">
           {/* Logo - Hidden on mobile (shown in header) */}
-          <div className="hidden lg:flex items-center gap-3 mb-6">
-            <div className="relative">
-              <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center animate-pulse-glow">
-                <Sparkles className="w-5 h-5 text-white" />
+          <div className="hidden lg:flex items-center justify-between gap-3 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center animate-pulse-glow">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-[var(--foreground)]">Analytics</h1>
+                <p className="text-xs text-[var(--muted-foreground)]">Dashboard</p>
               </div>
             </div>
-            <div>
-              <h1 className="text-lg font-bold text-white">Analytics</h1>
-              <p className="text-xs text-gray-500">Dashboard</p>
-            </div>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:border-[var(--accent)] transition-colors flex-shrink-0"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
           </div>
 
           {/* Website Selector */}
@@ -122,17 +144,17 @@ export default function Sidebar() {
                 className="w-full flex items-center justify-between p-3 rounded-xl bg-[var(--card)] border border-[var(--border)] hover:border-[var(--accent)] transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <Globe className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                  <Globe className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
                   <div className="min-w-0 text-left">
-                    <p className="text-white text-sm font-medium truncate">
+                    <p className="text-[var(--foreground)] text-sm font-medium truncate">
                       {currentWebsite?.name || "Select website"}
                     </p>
-                    <p className="text-gray-500 text-xs truncate">
+                    <p className="text-[var(--muted-foreground)] text-xs truncate">
                       {currentWebsite?.domain || "No site selected"}
                     </p>
                   </div>
                 </div>
-                <ChevronDown className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${showSiteSelector ? "rotate-180" : ""}`} />
+                <ChevronDown className={`w-4 h-4 text-[var(--muted-foreground)] flex-shrink-0 transition-transform ${showSiteSelector ? "rotate-180" : ""}`} />
               </button>
 
               {showSiteSelector && (
@@ -149,10 +171,10 @@ export default function Sidebar() {
                         currentWebsite?.site_id === site.site_id ? "bg-purple-500/10" : ""
                       }`}
                     >
-                      <div className={`w-2 h-2 rounded-full ${currentWebsite?.site_id === site.site_id ? "bg-purple-400" : "bg-gray-600"}`} />
+                      <div className={`w-2 h-2 rounded-full ${currentWebsite?.site_id === site.site_id ? "bg-purple-400" : "bg-gray-500"}`} />
                       <div className="min-w-0 text-left">
-                        <p className="text-white text-sm truncate">{site.name}</p>
-                        <p className="text-gray-500 text-xs truncate">{site.domain}</p>
+                        <p className="text-[var(--foreground)] text-sm truncate">{site.name}</p>
+                        <p className="text-[var(--muted-foreground)] text-xs truncate">{site.domain}</p>
                       </div>
                     </button>
                   ))}
@@ -160,7 +182,7 @@ export default function Sidebar() {
                     <Link
                       href="/websites"
                       onClick={() => setShowSiteSelector(false)}
-                      className="flex items-center gap-2 px-4 py-2 text-purple-400 hover:bg-[var(--background)] transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 text-purple-600 dark:text-purple-400 hover:bg-[var(--background)] transition-colors"
                     >
                       <Settings className="w-4 h-4" />
                       <span className="text-sm">Manage Websites</span>
@@ -186,7 +208,7 @@ export default function Sidebar() {
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
                     isActive
                       ? "bg-[var(--accent)] text-white glow-sm"
-                      : "text-gray-400 hover:text-white hover:bg-[var(--card-hover)]"
+                      : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--card-hover)]"
                   }`}
                 >
                   <Icon
@@ -223,18 +245,18 @@ export default function Sidebar() {
                         className="w-8 h-8 rounded-full"
                       />
                     ) : (
-                      <span className="text-purple-400 text-sm font-medium">
+                      <span className="text-purple-600 dark:text-purple-400 text-sm font-medium">
                         {(user.name || user.email)[0].toUpperCase()}
                       </span>
                     )}
                   </div>
                   <div className="min-w-0 text-left flex-1">
-                    <p className="text-white text-sm font-medium truncate">
+                    <p className="text-[var(--foreground)] text-sm font-medium truncate">
                       {user.name || "User"}
                     </p>
-                    <p className="text-gray-500 text-xs truncate">{user.email}</p>
+                    <p className="text-[var(--muted-foreground)] text-xs truncate">{user.email}</p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${showUserMenu ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 text-[var(--muted-foreground)] flex-shrink-0 transition-transform ${showUserMenu ? "rotate-180" : ""}`} />
                 </button>
 
                 {showUserMenu && (
@@ -245,7 +267,7 @@ export default function Sidebar() {
                         logout();
                         setShowUserMenu(false);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-red-400 hover:bg-[var(--background)] transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-[var(--background)] transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       <span className="text-sm">Sign out</span>

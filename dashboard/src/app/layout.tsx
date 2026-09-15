@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
+import { ThemeProvider, themeInitScript } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Analytics Dashboard",
@@ -14,10 +15,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[var(--background)]">
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+        <ThemeProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

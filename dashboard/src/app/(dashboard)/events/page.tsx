@@ -107,8 +107,8 @@ export default function EventsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Live Events</h1>
-          <p className="text-gray-400">
+          <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">Live Events</h1>
+          <p className="text-[var(--muted-foreground)]">
             Real-time stream of analytics events
           </p>
         </div>
@@ -116,8 +116,8 @@ export default function EventsPage() {
           onClick={() => setIsPaused(!isPaused)}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-colors ${
             isPaused
-              ? "bg-green-500/20 border-green-500/50 text-green-400"
-              : "bg-[var(--card)] border-[var(--border)] text-white"
+              ? "bg-green-500/20 border-green-500/50 text-green-700 dark:text-green-400"
+              : "bg-[var(--card)] border-[var(--border)] text-[var(--foreground)]"
           }`}
         >
           {isPaused ? (
@@ -141,7 +141,7 @@ export default function EventsPage() {
           className={`px-4 py-2 rounded-full text-sm transition-colors ${
             filter === null
               ? "bg-purple-500 text-white"
-              : "bg-[var(--card)] text-gray-400 hover:text-white"
+              : "bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
           }`}
         >
           All Events
@@ -153,7 +153,7 @@ export default function EventsPage() {
             className={`px-4 py-2 rounded-full text-sm transition-colors ${
               filter === type
                 ? "bg-purple-500 text-white"
-                : "bg-[var(--card)] text-gray-400 hover:text-white"
+                : "bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             }`}
           >
             {type}
@@ -168,10 +168,10 @@ export default function EventsPage() {
             isPaused ? "bg-yellow-500" : "bg-green-500 animate-pulse"
           }`}
         />
-        <span className="text-sm text-gray-400">
+        <span className="text-sm text-[var(--muted-foreground)]">
           {isPaused ? "Paused" : "Listening for events..."}
         </span>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-[var(--muted-foreground)]">
           ({filteredEvents.length} events)
         </span>
       </div>
@@ -183,9 +183,9 @@ export default function EventsPage() {
       >
         {filteredEvents.length === 0 ? (
           <div className="text-center py-20">
-            <Activity className="w-16 h-16 mx-auto mb-4 text-gray-600 animate-pulse" />
-            <p className="text-gray-400">Waiting for events...</p>
-            <p className="text-gray-500 text-sm mt-2">
+            <Activity className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-600 animate-pulse" />
+            <p className="text-[var(--muted-foreground)]">Waiting for events...</p>
+            <p className="text-[var(--muted-foreground)] text-sm mt-2">
               Make sure the tracking script is active on your website
             </p>
           </div>
@@ -211,37 +211,37 @@ export default function EventsPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-white">
+                        <span className="font-medium text-[var(--foreground)]">
                           {event.type}
                         </span>
-                        <span className="text-xs text-gray-500 font-mono">
+                        <span className="text-xs text-[var(--muted-foreground)] font-mono">
                           {event.sessionId.slice(0, 8)}...
                         </span>
                       </div>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[var(--muted-foreground)]">
                         {format(new Date(event.timestamp), "HH:mm:ss")}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-400 mt-1 truncate">
+                    <p className="text-sm text-[var(--muted-foreground)] mt-1 truncate">
                       {event.pageUrl}
                     </p>
                     {event.data && Object.keys(event.data).length > 0 && (
                       <div className="mt-2 p-2 rounded-lg bg-[var(--background)] text-xs">
                         {event.type === "click" && event.data.element ? (
-                          <span className="text-purple-400">
+                          <span className="text-purple-600 dark:text-purple-400">
                             Clicked: {(event.data.element as Record<string, unknown>)?.tag as string || "element"}
                             {(event.data.element as Record<string, unknown>)?.id ? ` #${(event.data.element as Record<string, unknown>).id}` : ""}
                           </span>
                         ) : event.type === "scroll" ? (
-                          <span className="text-green-400">
+                          <span className="text-green-600 dark:text-green-400">
                             Scroll depth: {(event.data as Record<string, unknown>)?.depth as number || 0}%
                           </span>
                         ) : event.type === "error" ? (
-                          <span className="text-red-400">
+                          <span className="text-red-600 dark:text-red-400">
                             {(event.data as Record<string, unknown>)?.message as string || "Unknown error"}
                           </span>
                         ) : event.type === "page_exit" ? (
-                          <span className="text-orange-400">
+                          <span className="text-orange-600 dark:text-orange-400">
                             Time on page: {Math.round(((event.data as Record<string, unknown>)?.timeOnPage as number || 0) / 1000)}s
                           </span>
                         ) : null}
